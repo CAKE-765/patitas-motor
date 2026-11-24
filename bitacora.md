@@ -198,3 +198,19 @@ cabeza                                                        cola
 ```
 
 Cambia `nuevo.siguiente`, que apunta al antiguo primer nodo `A`, y `cabeza`, que pasa a apuntar a `nuevo`. `cola` y `C.siguiente` no cambian.
+
+## Comparación: lista enlazada y arreglo
+
+Complejidades para una lista simplemente enlazada que conserva referencias a `cabeza` y `cola`, y para un arreglo dinámico de JavaScript. `k` representa una posición.
+
+| Operación | Lista enlazada | Arreglo |
+|---|---:|---:|
+| Agregar al final | O(1) | O(1) amortizado* |
+| Agregar al inicio | O(1) | O(n) |
+| Acceder a la atención número k | O(n) | O(1) |
+| Buscar una atención | O(n) | O(n) |
+| Eliminar la primera atención | O(1) | O(n) |
+
+En la lista enlazada, agregar al final es O(1) porque se mantiene la referencia `cola`; agregar al inicio y eliminar el primer nodo solo requieren actualizar `cabeza`. Para acceder a la posición k o buscar un dato, se recorre la cadena desde el inicio. En un arreglo, el acceso por índice es directo, pero agregar o eliminar al inicio desplaza los demás elementos.
+
+*El agregado al final de un arreglo es O(1) amortizado; ocasionalmente puede ser O(n) si necesita redimensionarse.*

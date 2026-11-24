@@ -49,6 +49,86 @@ class ListaEnlazada {
     obtenerTamanio() {
         return this.tamanio;
     }
+
+    buscar(condicion) {
+        let actual = this.cabeza;
+        while (actual) {
+            if (condicion(actual.dato)) return actual.dato;
+            actual = actual.siguiente;
+        }
+        return null;
+    }
+
+    // Elimina el primer nodo que cumple la condición y devuelve su dato (o null)
+    eliminar(condicion) {
+        if (!this.cabeza) return null;
+        if (condicion(this.cabeza.dato)) {
+            const dato = this.cabeza.dato;
+            this.cabeza = this.cabeza.siguiente;
+            if (!this.cabeza) this.cola = null;
+            this.tamanio--;
+            return dato;
+        }
+        let anterior = this.cabeza;
+        while (anterior.siguiente) {
+            if (condicion(anterior.siguiente.dato)) {
+                const dato = anterior.siguiente.dato;
+                anterior.siguiente = anterior.siguiente.siguiente;
+                if (!anterior.siguiente) this.cola = anterior; // eliminamos la cola
+                this.tamanio--;
+                return dato;
+            }
+            anterior = anterior.siguiente;
+        }
+        return null;
+    }
+    insertarDespuesDe(condicion, dato) {
+    let actual = this.cabeza;
+
+    while (actual) {
+        if (condicion(actual.dato)) {
+            const nuevo = new Nodo(dato);
+            nuevo.siguiente = actual.siguiente;
+            actual.siguiente = nuevo;
+
+            if (actual === this.cola) {
+                this.cola = nuevo;
+            }
+
+            this.tamanio++;
+            return true;
+        }
+
+        actual = actual.siguiente;
+    }
+
+    return false;
+}
+}
+const datosIniciales = require("./RegistroClinico");
+
+class RegistroClinico {
+    constructor(datos = datosIniciales) {
+        this.historiales = new Map();
+
+        for (const [mascota, atenciones] of datos) {
+            for (const atencion of atenciones) {
+                this.registrarAtencion(mascota, atencion);
+            }
+        }
+    }
+
+    registrarAtencion(mascota, atencion) {
+        if (!this.historiales.has(mascota)) {
+            this.historiales.set(mascota, new ListaEnlazada());
+        }
+
+        this.historiales.get(mascota).agregarAlFinal(atencion);
+    }
+
+    obtenerHistorial(mascota) {
+        return this.historiales.get(mascota) || null;
+    }
 }
 
-module.exports = ListaEnlazada;
+module.exports = {ListaEnlazada, RegistroClinico};

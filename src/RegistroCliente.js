@@ -3,3 +3,5 @@ const lola = [
     { fecha: "15/03", motivo: "Control de peso", veterinario: "Dr. Gómez", costo: 40000 },
     { fecha: "20/05", motivo: "Limpieza dental", veterinario: "Dra. Ríos", costo: 150000 },
 ];
+
+module.exports = lola;
