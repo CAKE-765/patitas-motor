@@ -1,3 +1,5 @@
+const Cola = require("./cola");
+
 class Recepcion {
     constructor() {
         this.urgencias = new Cola();
