@@ -214,3 +214,27 @@ Complejidades para una lista simplemente enlazada que conserva referencias a `ca
 En la lista enlazada, agregar al final es O(1) porque se mantiene la referencia `cola`; agregar al inicio y eliminar el primer nodo solo requieren actualizar `cabeza`. Para acceder a la posición k o buscar un dato, se recorre la cadena desde el inicio. En un arreglo, el acceso por índice es directo, pero agregar o eliminar al inicio desplaza los demás elementos.
 
 *El agregado al final de un arreglo es O(1) amortizado; ocasionalmente puede ser O(n) si necesita redimensionarse.*
+
+## Comparación: Cola y arreglo con 100.000 turnos
+
+Se encolaron y desencolaron 100.000 turnos con la clase `Cola` y con un arreglo de JavaScript (`push` y `shift`). Los objetos de turno se crearon antes de medir. Se hicieron cinco ejecuciones por implementación y se tomó la mediana. Los tiempos corresponden solo a encolar o desencolar, no a crear los turnos.
+
+**Entorno:** Node.js v24.2.0.
+
+| Implementación | Encolar 100.000 turnos | Desencolar 100.000 turnos |
+|---|---:|---:|
+| `Cola` (`encolar` / `desencolar`) | 3,40 ms | 0,96 ms |
+| Arreglo (`push` / `shift`) | 1,55 ms | 9.382,75 ms |
+
+Los tiempos pueden variar según el equipo y la carga del sistema; en este caso se compara la mediana de cinco ejecuciones.
+
+### Complejidad por operación
+
+| Operación | `Cola` | Arreglo |
+|---|---:|---:|
+| Encolar al final | `encolar`: O(1) | `push`: O(1) amortizado |
+| Desencolar del frente | `desencolar`: O(1) | `shift`: O(n) |
+
+La cola enlazada conserva referencias al frente y al final. Por eso, para encolar solo enlaza un nodo y para desencolar avanza la referencia al frente: ambas operaciones toman tiempo constante. `push` también agrega al final en tiempo constante amortizado, aunque ocasionalmente el arreglo debe crecer. `shift` elimina el primer elemento y debe reorganizar los índices de los demás; por eso una sola llamada puede tomar O(n).
+
+Al desencolar todos los turnos, la cola enlazada tarda O(n) en total, mientras que repetir `shift` n veces puede tardar O(n²). Esto explica por qué el arreglo fue algo más rápido al encolar, pero mucho más lento al desencolar en esta medición.
