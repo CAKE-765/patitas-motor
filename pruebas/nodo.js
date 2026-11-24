@@ -9,7 +9,7 @@ n2.siguiente = n3;
 n3.siguiente = null;
 const cabeza = n1;
 
-// Recorrer e imprimir las atenciones
+
 let actual = cabeza;
 
 while (actual !== null) {
@@ -17,7 +17,6 @@ while (actual !== null) {
     actual = actual.siguiente;
 }
 
-// Calcular el costo total
 let total = 0;
 actual = cabeza;
 

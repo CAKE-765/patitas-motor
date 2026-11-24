@@ -60,3 +60,141 @@ Resultado del costo total: $85000
 ```
 
 Esto ocurre porque una lista enlazada no busca los nodos por posición: para llegar a `n2`, el recorrido necesita seguir la referencia `n1.siguiente`. Al reemplazarla por `null`, se rompe la ruta hacia `n2` y `n3`.
+
+## Referencias al agregar nodos
+
+En los diagramas, `cabeza` apunta al primer nodo y `cola` al último. La flecha `siguiente` muestra la referencia entre nodos.
+
+### Agregar al final
+
+**Lista vacía**
+
+Antes:
+
+```text
+cabeza -> null
+cola   -> null
+```
+
+Después de crear `nuevo`:
+
+```text
+cabeza ─┐
+        v
+      [nuevo | siguiente -> null]
+        ^
+cola ───┘
+```
+
+Cambian `cabeza` y `cola`: ambas apuntan a `nuevo`. Su `siguiente` queda en `null`.
+
+**Lista con un nodo**
+
+Antes:
+
+```text
+cabeza, cola
+     |
+     v
+   [A | siguiente -> null]
+```
+
+Después:
+
+```text
+cabeza             cola
+   |                 |
+   v                 v
+ [A | siguiente] -> [nuevo | siguiente -> null]
+```
+
+Cambia `A.siguiente`, que apunta a `nuevo`, y `cola`, que pasa a apuntar a `nuevo`. `cabeza` no cambia.
+
+**Lista con varios nodos**
+
+Antes:
+
+```text
+cabeza                         cola
+   |                             |
+   v                             v
+ [A | siguiente] -> [B | siguiente] -> [C | siguiente -> null]
+```
+
+Después:
+
+```text
+cabeza                                      cola
+   |                                          |
+   v                                          v
+ [A | siguiente] -> [B | siguiente] -> [C | siguiente] -> [nuevo | siguiente -> null]
+```
+
+Cambia `C.siguiente`, que apunta a `nuevo`, y `cola`, que pasa a apuntar a `nuevo`. `cabeza` no cambia.
+
+### Agregar al inicio
+
+**Lista vacía**
+
+Antes:
+
+```text
+cabeza -> null
+cola   -> null
+```
+
+Después de crear `nuevo`:
+
+```text
+cabeza ─┐
+        v
+      [nuevo | siguiente -> null]
+        ^
+cola ───┘
+```
+
+Cambian `cabeza` y `cola`: ambas apuntan a `nuevo`. Su `siguiente` queda en `null`.
+
+**Lista con un nodo**
+
+Antes:
+
+```text
+cabeza, cola
+     |
+     v
+   [A | siguiente -> null]
+```
+
+Después:
+
+```text
+cabeza             cola
+   |                 |
+   v                 v
+ [nuevo | siguiente] -> [A | siguiente -> null]
+```
+
+Cambia `nuevo.siguiente`, que apunta al antiguo primer nodo `A`, y `cabeza`, que pasa a apuntar a `nuevo`. `cola` sigue apuntando a `A`.
+
+**Lista con varios nodos**
+
+Antes:
+
+```text
+cabeza                                          cola
+   |                                              |
+   v                                              v
+ [A | siguiente] -> [B | siguiente] -> [C | siguiente -> null]
+```
+
+Después:
+
+```text
+cabeza                                                        cola
+   |                                                            |
+   v                                                            v
+ [nuevo | siguiente] -> [A | siguiente] -> [B | siguiente] -> [C | siguiente -> null]
+```
+
+Cambia `nuevo.siguiente`, que apunta al antiguo primer nodo `A`, y `cabeza`, que pasa a apuntar a `nuevo`. `cola` y `C.siguiente` no cambian.
