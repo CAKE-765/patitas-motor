@@ -238,3 +238,12 @@ Los tiempos pueden variar según el equipo y la carga del sistema; en este caso 
 La cola enlazada conserva referencias al frente y al final. Por eso, para encolar solo enlaza un nodo y para desencolar avanza la referencia al frente: ambas operaciones toman tiempo constante. `push` también agrega al final en tiempo constante amortizado, aunque ocasionalmente el arreglo debe crecer. `shift` elimina el primer elemento y debe reorganizar los índices de los demás; por eso una sola llamada puede tomar O(n).
 
 Al desencolar todos los turnos, la cola enlazada tarda O(n) en total, mientras que repetir `shift` n veces puede tardar O(n²). Esto explica por qué el arreglo fue algo más rápido al encolar, pero mucho más lento al desencolar en esta medición.
+
+## Estructuras del motor Patitas (v0.2)
+
+| Estructura | Principio | Uso en Patitas | Complejidad de operaciones principales |
+|---|---|---|---|
+| Colas de urgencias y consultas (`Cola`) | FIFO | Mantienen los turnos por tipo; recepción prioriza urgencias y respeta el orden de llegada dentro de cada fila. | Encolar, desencolar y consultar el tamaño: O(1). |
+| Pilas de deshacer y rehacer (`Pila`) | LIFO | El editor revierte o reaplica la acción más reciente sobre un historial. | Apilar, desapilar, consultar el tope y el tamaño: O(1). |
+| Listas enlazadas (`ListaEnlazada`) | Secuencial | Guardan las atenciones de cada mascota en orden y permiten recorrer su historial. | Agregar al inicio o al final: O(1); buscar, eliminar, insertar después de buscar y recorrer: O(n). |
+| Mapa (`Map`) | Clave-valor | Relaciona el identificador de cada mascota con su historial clínico. | Obtener, insertar y comprobar una clave: O(1) promedio. |
